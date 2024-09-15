@@ -1,0 +1,125 @@
+---
+title: "p8105_hw1_fw2394"
+author: "Fang Wang"
+date: "2024-09-15"
+output: github_document
+---
+
+# Homework 1
+
+## Problem 1
+
+**I loaded necessary package "tidyverse":**
+```{r libraries}
+library(tidyverse)
+```
+
+**I loaded the dataset "penguins":**
+```{r dataset_loading}
+data("penguins", package = "palmerpenguins")
+```
+
+**To get all variables in penguins:**
+```{r variables}
+str(penguins)
+```
+**The "penguins" dataset includes 8 variables: "species", "island",  "bill_length_mm", "bill_depth_mm", "flipper_length_mm", "body_mass_g", "sex", "year".**
+
+**To see the data size:**
+```{r data_size}
+nrow(penguins) 
+ncol(penguins)
+```
+**The dataset has 344 rows and 8 columns.**
+
+**To check the mean of flipper length:**
+```{r mean_filpper_length}
+summary(penguins $ flipper_length_mm)
+# Alternatively:
+mean(penguins$flipper_length_mm, na.rm=TRUE)
+```
+**The mean of flipper length is 200.9mm.**
+
+**To make a scatterplot using ggplot:**
+```{r scatterplot}
+ggplot(penguins, aes(y = flipper_length_mm, 
+                     x = bill_length_mm,
+                     color = species)) + 
+  geom_point()
+```
+
+**To save the scatterplot:**
+```{r save}
+ggsave("penguins_plot.png", dpi = 300)
+```
+
+
+## Problem 2
+
+**To create a random sample of size 10 from a standard normal distribution:**
+```{r random_sample}
+set.seed(0653)  # Set seed for reproducibility
+random_sample <- rnorm(10)
+```
+
+**To create a logical vector to indicate whether elements are greater than 0:**
+```{r logical_vector}
+logical_vector <- random_sample > 0
+```
+
+**To create a character vector of length 10:**
+```{r character_vector}
+character_vector <- c("A", "B", "C", "D", "E", "F", "G", "H", "I", "J")
+```
+
+**To create a factor vector of length 10, with 3 different "levels":**
+```{r factor_vector}
+factor_vector <- factor(rep(c("Level1", "Level2", "Level3"), length.out = 10)) # using rep() to repeat 3 levels
+```
+
+**To combine all into a data frame:**
+```{r df}
+dataframe <- data.frame(
+  random_sample = random_sample,
+  logical_vector = logical_vector,
+  character_vector = character_vector,
+  factor_vector = factor_vector
+)
+```
+
+**To print the whole dataframe:**
+```{r print}
+print(dataframe) 
+```
+
+**To calculate the mean of the random sample:**
+```{r mean_sample}
+mean_sample <- dataframe |>
+  pull(random_sample) |>
+  mean(na.rm=TRUE)
+```
+**It works to calculate the mean of the random sample.**
+
+**To calculate the mean of the logical vector:**
+```{r mean_logical}
+mean_logical <- dataframe |>
+  pull(logical_vector) |>
+  mean(na.rm=TRUE)
+```
+**It works to calculate the mean of the logical vector.**
+
+**To calculate the mean of the character vector:**
+```{r mean_character}
+mean_character <- dataframe |>
+  pull(character_vector) |>
+  mean(na.rm=TRUE)
+```
+**It doesn't work to calculate the mean of the character vector.**
+
+**To calculate the mean of the factor vector:**
+```{r mean_factor}
+mean_factor <- dataframe |>
+  pull(factor_vector) |>
+  mean(na.rm=TRUE)
+```
+**It doesn't work to calculate the mean of the factor vector.**
